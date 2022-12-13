@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import TablePagination from '@mui/material/TablePagination';
 import getMovies, { MovieType } from '../../utils/movies';
 import { setMovies, selectMovies } from './moviesSlice';
 import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Unstable_Grid2';
 import MovieCard from '../../components/Card';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import Bottom from './Bottom';
 
 export default function Movies() {
   const movies = useAppSelector(selectMovies),
@@ -51,17 +51,17 @@ export default function Movies() {
 
   return (
     <>
+      {/* Filter bar */}
       <Grid
         container
-        spacing={{ xs: 2, md: 3 }}
+        spacing={{ xs: 1, sm: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
-        sx={{
-          marginBottom: '32px',
-          alignItems: 'center'
-        }}
+        sx={{ marginBottom: '32px', alignItems: 'center' }}
       >
-        {movies.length === 0 ? (
-          showFilterBarSkeleton()
+        {!loaded ? (
+          <Grid>
+            <Skeleton animation="wave" variant="rectangular" height={70} />
+          </Grid>
         ) : (
           <>
             <Grid key="autocomplete" xs={10.7}>
@@ -87,6 +87,7 @@ export default function Movies() {
           </>
         )}
       </Grid>
+      {/* Cards */}
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -96,27 +97,28 @@ export default function Movies() {
           ? showCardSkeletons()
           : showMovies(selectedMovies, page, limit)}
       </Grid>
-      <Bottom
-        total={selectedMovies.length}
-        page={page}
-        limit={limit}
-        handlePageChange={(_, newPage) => {
-          setPage(newPage);
-        }}
-        handleLimitChange={(e) => {
-          setLimit(Number(e.target.value));
-          setPage(0);
-        }}
-      />
+      {/* Pagination and options */}
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        <TablePagination
+          component="div"
+          count={selectedMovies.length}
+          page={page}
+          rowsPerPage={limit}
+          onPageChange={(_, newPage) => {
+            setPage(newPage);
+          }}
+          onRowsPerPageChange={(e) => {
+            setLimit(Number(e.target.value));
+            setPage(0);
+          }}
+          rowsPerPageOptions={[4, 8, 12, { label: 'All', value: -1 }]}
+        />
+      </Grid>
     </>
-  );
-}
-
-function showFilterBarSkeleton() {
-  return (
-    <Grid key={0} xs>
-      <Skeleton animation="wave" variant="rectangular" height={70} />
-    </Grid>
   );
 }
 
