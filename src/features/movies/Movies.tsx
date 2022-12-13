@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TablePagination from '@mui/material/TablePagination';
-import getMovies, { MovieType } from '../../utils/movies';
+import getMovies, { formatCategories, MovieType } from '../../utils/movies';
 import { setMovies, selectMovies } from './moviesSlice';
 import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
@@ -10,6 +10,7 @@ import MovieCard from '../../components/Card';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import Form from './Form';
 
 export default function Movies() {
   const movies = useAppSelector(selectMovies),
@@ -18,13 +19,14 @@ export default function Movies() {
     [availableCategories, setAvailableCategories] = useState<string[]>([]),
     [selectedCategories, setSelectedCategories] = useState<string[]>([]),
     [selectedMovies, setSelectedMovies] = useState<MovieType[]>([]),
+    [openDialog, setOpenDialog] = useState(false),
     [page, setPage] = useState(0),
     [limit, setLimit] = useState(12);
 
   useEffect(() => {
     async function fetchMovies() {
       const fetchedMovies = await getMovies();
-      dispatch(setMovies(fetchedMovies));
+      dispatch(setMovies(formatCategories(fetchedMovies)));
       setSelectedMovies(fetchedMovies);
       setLoaded(true);
     }
@@ -33,7 +35,6 @@ export default function Movies() {
 
   useEffect(() => {
     setAvailableCategories([...new Set(movies.map((movie) => movie.category))]);
-    setSelectedMovies(movies);
 
     if (selectedCategories.length === 0) setSelectedMovies(movies);
     else
@@ -74,15 +75,16 @@ export default function Movies() {
               />
             </Grid>
             <Grid key="btn" xs>
-              {/* WIP */}
               <Button
                 variant="contained"
                 color="success"
                 size="large"
                 sx={{ width: '100%' }}
+                onClick={() => setOpenDialog(true)}
               >
                 Nouveau film
               </Button>
+              <Form open={openDialog} setOpen={setOpenDialog} />
             </Grid>
           </>
         )}

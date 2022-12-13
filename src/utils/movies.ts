@@ -77,3 +77,17 @@ export default async function getMovies() {
     (resolve) => setTimeout(resolve, 2000, movies) // changed 100 to 1000 so it's easier to see the skeleton
   );
 }
+
+export async function getLatestId() {
+  const m = await getMovies();
+  return m[m.length - 1].id;
+}
+
+export function formatCategories(input: MovieType[]) {
+  return input.map((movie) => ({
+    ...movie,
+    category:
+      movie.category.charAt(0).toUpperCase() +
+      movie.category.slice(1).toLowerCase()
+  }));
+}
