@@ -10,6 +10,7 @@ import {
   selectCount
 } from './counterSlice';
 import styles from './Counter.module.css';
+import { Button } from '@mui/material';
 
 export function Counter() {
   const count = useAppSelector(selectCount),
@@ -43,12 +44,12 @@ export function Counter() {
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />
-        <button
-          className={styles.button}
+        <Button
+          variant="contained"
           onClick={() => dispatch(incrementByAmount(incrementValue))}
         >
           Add Amount
-        </button>
+        </Button>
         <button
           className={styles.asyncButton}
           onClick={() => dispatch(incrementAsync(incrementValue))}
