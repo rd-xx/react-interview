@@ -1,28 +1,31 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import getMovies, { MovieType } from '../../utils/movies';
 import { setMovies, selectMovies } from './moviesSlice';
+import Autocomplete from '@mui/material/Autocomplete';
+import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
+import TextField from '@mui/material/TextField';
 import MovieCard from '../../components/Card';
+import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
-import {
-  Autocomplete,
-  Typography,
-  TextField,
-  Skeleton,
-  Button
-} from '@mui/material';
+import Button from '@mui/material/Button';
+import Bottom from './Bottom';
 
 export default function Movies() {
   const movies = useAppSelector(selectMovies),
     dispatch = useAppDispatch(),
     [loaded, setLoaded] = useState(false),
     [availableCategories, setAvailableCategories] = useState<string[]>([]),
-    [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    [selectedCategories, setSelectedCategories] = useState<string[]>([]),
+    [selectedMovies, setSelectedMovies] = useState<MovieType[]>([]),
+    [page, setPage] = useState(0),
+    [limit, setLimit] = useState(12);
 
   useEffect(() => {
     async function fetchMovies() {
       const fetchedMovies = await getMovies();
       dispatch(setMovies(fetchedMovies));
+      setSelectedMovies(fetchedMovies);
       setLoaded(true);
     }
     fetchMovies();
@@ -31,6 +34,14 @@ export default function Movies() {
   useEffect(() => {
     setAvailableCategories([...new Set(movies.map((movie) => movie.category))]);
   }, [movies]);
+
+  useEffect(() => {
+    if (selectedCategories.length === 0) setSelectedMovies(movies);
+    else
+      setSelectedMovies(
+        movies.filter((movie) => selectedCategories.includes(movie.category))
+      );
+  }, [selectedCategories]);
 
   if (movies.length === 0 && loaded)
     return (
@@ -84,8 +95,20 @@ export default function Movies() {
       >
         {movies.length === 0
           ? showCardSkeletons()
-          : showMovies(movies, selectedCategories)}
+          : showMovies(selectedMovies, page, limit)}
       </Grid>
+      <Bottom
+        total={selectedMovies.length}
+        page={page}
+        limit={limit}
+        handlePageChange={(_, newPage) => {
+          setPage(newPage);
+        }}
+        handleLimitChange={(e) => {
+          setLimit(Number(e.target.value));
+          setPage(0);
+        }}
+      />
     </>
   );
 }
@@ -98,7 +121,6 @@ function showFilterBarSkeleton() {
   );
 }
 
-// Load skeletons if the movies are not loaded yet
 function showCardSkeletons() {
   return Array.from(new Array(10)).map((_, i) => (
     <Grid key={i} xs={4}>
@@ -107,14 +129,13 @@ function showCardSkeletons() {
   ));
 }
 
-function showMovies(movies: MovieType[], options: string[]) {
-  return movies.map((movie) => {
-    if (options.length && !options.includes(movie.category)) return null;
+function showMovies(movies: MovieType[], page: number, limit: number) {
+  const start = page * limit,
+    end = start + limit + 1;
 
-    return (
-      <Grid key={movie.id} xs={4}>
-        <MovieCard {...movie} />
-      </Grid>
-    );
-  });
+  return movies.slice(start, end).map((movie) => (
+    <Grid key={movie.id} xs={4}>
+      <MovieCard {...movie} />
+    </Grid>
+  ));
 }
