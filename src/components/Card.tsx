@@ -1,19 +1,17 @@
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { removeMovie } from '../features/movies/moviesSlice';
+import CardActionArea from '@mui/material/CardActionArea';
+import ToggleButton from '@mui/material/ToggleButton';
 import CardContent from '@mui/material/CardContent';
 import Favorite from '@mui/icons-material/Favorite';
+import CardActions from '@mui/material/CardActions';
 import { compressNumber } from '../utils/numbers';
+import Typography from '@mui/material/Typography';
 import { useAppDispatch } from '../app/hooks';
 import { MovieType } from '../utils/movies';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import { useState } from 'react';
-import {
-  ToggleButtonGroup,
-  CardActionArea,
-  ToggleButton,
-  CardActions,
-  Typography,
-  Button
-} from '@mui/material';
 
 export default function MovieCard(props: MovieType) {
   const dispatch = useAppDispatch(),

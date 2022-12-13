@@ -33,15 +33,14 @@ export default function Movies() {
 
   useEffect(() => {
     setAvailableCategories([...new Set(movies.map((movie) => movie.category))]);
-  }, [movies]);
+    setSelectedMovies(movies);
 
-  useEffect(() => {
     if (selectedCategories.length === 0) setSelectedMovies(movies);
     else
       setSelectedMovies(
         movies.filter((movie) => selectedCategories.includes(movie.category))
       );
-  }, [selectedCategories]);
+  }, [selectedCategories, movies]);
 
   if (movies.length === 0 && loaded)
     return (
@@ -131,7 +130,7 @@ function showCardSkeletons() {
 
 function showMovies(movies: MovieType[], page: number, limit: number) {
   const start = page * limit,
-    end = start + limit + 1;
+    end = start + limit;
 
   return movies.slice(start, end).map((movie) => (
     <Grid key={movie.id} xs={4}>
