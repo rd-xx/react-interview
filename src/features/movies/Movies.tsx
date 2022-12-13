@@ -1,6 +1,6 @@
+import getMovies, { formatCategories, MovieType } from '../../utils/movies';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TablePagination from '@mui/material/TablePagination';
-import getMovies, { formatCategories, MovieType } from '../../utils/movies';
 import { setMovies, selectMovies } from './moviesSlice';
 import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
@@ -10,6 +10,7 @@ import MovieCard from '../../components/Card';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import { Trans } from '@lingui/macro';
 import Form from './Form';
 
 export default function Movies() {
@@ -46,7 +47,7 @@ export default function Movies() {
   if (movies.length === 0 && loaded)
     return (
       <Typography variant="h5" align="center">
-        Vous avez supprimé tous les films.
+        <Trans>You deleted every movie.</Trans>
       </Typography>
     );
 
@@ -82,7 +83,7 @@ export default function Movies() {
                 sx={{ width: '100%' }}
                 onClick={() => setOpenDialog(true)}
               >
-                Nouveau film
+                <Trans>New movie</Trans>
               </Button>
               <Form open={openDialog} setOpen={setOpenDialog} />
             </Grid>

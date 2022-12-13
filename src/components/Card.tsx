@@ -11,6 +11,7 @@ import { useAppDispatch } from '../app/hooks';
 import { MovieType } from '../utils/movies';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import { Trans } from '@lingui/macro';
 import { useState } from 'react';
 
 export default function MovieCard(props: MovieType) {
@@ -65,17 +66,17 @@ export default function MovieCard(props: MovieType) {
         >
           <ToggleButton value="like" onClick={handleRatingButton}>
             <Favorite fontSize="small" sx={{ mr: 1 }} />
-            Aimer
+            <Trans>Like</Trans>
           </ToggleButton>
           <ToggleButton value="dislike" onClick={handleRatingButton}>
-            Disliker
+            <Trans>Dislike</Trans>
           </ToggleButton>
         </ToggleButtonGroup>
         <Typography>
           {compressNumber(likes)}/{compressNumber(dislikes)}
         </Typography>
         <Button variant="outlined" color="error" onClick={handleDeleteButton}>
-          Supprimer
+          <Trans>Delete</Trans>
         </Button>
       </CardActions>
     </Card>

@@ -1,3 +1,4 @@
+import { formatCategories, getLatestId } from '../../utils/movies';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import DialogContentText from '@mui/material/DialogContentText';
 import { TransitionProps } from '@mui/material/transitions';
@@ -8,7 +9,6 @@ import { forwardRef, useEffect, useState } from 'react';
 import { addMovie, selectMovies } from './moviesSlice';
 import DialogTitle from '@mui/material/DialogTitle';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { formatCategories, getLatestId } from '../../utils/movies';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,6 +16,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import Slide from '@mui/material/Slide';
 import Alert from '@mui/material/Alert';
+import { Trans } from '@lingui/macro';
 
 type FormProps = {
   open: boolean;
@@ -90,16 +91,18 @@ export default function Form(props: FormProps) {
         onClose={handleClick}
         fullScreen={fullScreen}
       >
-        <DialogTitle>Ajouter un film</DialogTitle>
+        <DialogTitle>
+          <Trans>Add movie</Trans>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Remplissez les champs ci-dessous pour ajouter un film à votre liste.
+            <Trans>Enter the fields below to add a movie to your list.</Trans>
           </DialogContentText>
           <TextField
             autoFocus
             fullWidth
             margin="dense"
-            label="Titre"
+            label={<Trans>Title</Trans>}
             type="text"
             variant="filled"
             sx={{ marginTop: '16px' }}
@@ -109,7 +112,7 @@ export default function Form(props: FormProps) {
           <TextField
             fullWidth
             margin="dense"
-            label="Catégorie"
+            label={<Trans>Category</Trans>}
             type="text"
             variant="filled"
             value={category}
@@ -129,7 +132,7 @@ export default function Form(props: FormProps) {
             startIcon={<AddIcon />}
             variant="contained"
           >
-            Ajouter
+            <Trans>Add</Trans>
           </LoadingButton>
         </DialogActions>
       </Dialog>
@@ -140,7 +143,9 @@ export default function Form(props: FormProps) {
         onClose={handleErrorToast}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Alert severity="error">Le film existe déjà !</Alert>
+        <Alert severity="error">
+          <Trans>This movie already exists!</Trans>
+        </Alert>
       </Snackbar>
       {/* Success toast */}
       <Snackbar
@@ -149,7 +154,9 @@ export default function Form(props: FormProps) {
         onClose={handleSuccessToast}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Alert severity="success">Le film a bien été ajouté !</Alert>
+        <Alert severity="success">
+          <Trans>The movie has been successfully added!</Trans>
+        </Alert>
       </Snackbar>
     </>
   );

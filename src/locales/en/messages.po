@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2022-12-13 18:06+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/features/movies/Form.tsx:135
+msgid "Add"
+msgstr "Add"
+
+#: src/features/movies/Form.tsx:95
+msgid "Add movie"
+msgstr "Add movie"
+
+#: src/features/movies/Form.tsx:115
+msgid "Category"
+msgstr "Category"
+
+#: src/components/Card.tsx:79
+msgid "Delete"
+msgstr "Delete"
+
+#: src/components/Card.tsx:72
+msgid "Dislike"
+msgstr "Dislike"
+
+#: src/features/movies/Form.tsx:99
+msgid "Enter the fields below to add a movie to your list."
+msgstr "Enter the fields below to add a movie to your list."
+
+#: src/components/Card.tsx:69
+msgid "Like"
+msgstr "Like"
+
+#: src/features/movies/Movies.tsx:86
+msgid "New movie"
+msgstr "New movie"
+
+#: src/features/movies/Form.tsx:158
+msgid "The movie has been successfully added!"
+msgstr "The movie has been successfully added!"
+
+#: src/features/movies/Form.tsx:147
+msgid "This movie already exists!"
+msgstr "This movie already exists!"
+
+#: src/features/movies/Form.tsx:105
+msgid "Title"
+msgstr "Title"
+
+#: src/features/movies/Movies.tsx:50
+msgid "You deleted every movie."
+msgstr "You deleted every movie."

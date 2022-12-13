@@ -6,7 +6,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "extract": "lingui extract",
+    "compile": "lingui compile"
   },
   "prettier": {
     "trailingComma": "none",
@@ -56,6 +58,9 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
+    "@lingui/cli": "^3.15.0",
+    "@lingui/macro": "^3.15.0",
+    "@lingui/react": "^3.15.0",
     "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.112",
     "@mui/material": "^5.11.0",
