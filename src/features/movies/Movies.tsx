@@ -1,10 +1,11 @@
 import getMovies, { formatCategories, MovieType } from '../../utils/movies';
+import { getLocale, availableLocales, changeLocale } from '../../App';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TablePagination from '@mui/material/TablePagination';
 import { setMovies, selectMovies } from './moviesSlice';
-import { getLocale, availableLocales, changeLocale } from '../../App';
 import Autocomplete from '@mui/material/Autocomplete';
+import MUISwitch from '../../components/MUISwitch';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -114,25 +115,23 @@ export default function Movies() {
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ marginTop: '32px' }}
       >
-        <Grid key="pagination" xs>
-          <TablePagination
-            component="div"
-            count={selectedMovies.length}
-            page={page}
-            rowsPerPage={limit}
-            onPageChange={(_, newPage) => {
-              setPage(newPage);
-            }}
-            onRowsPerPageChange={(e) => {
-              setLimit(Number(e.target.value));
-              setPage(0);
-            }}
-            rowsPerPageOptions={[4, 8, 12, { label: 'All', value: -1 }]}
-          />
-        </Grid>
-        <Grid key="options" xs>
-          <Select value={locale} onChange={handleChangeLocale}>
+        <Grid key="empty" xs />
+        <Grid
+          key="language"
+          xs
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Select
+            value={locale}
+            onChange={handleChangeLocale}
+            sx={{ mr: '16px' }}
+          >
             {availableLocales.map((locale) => {
               return (
                 <MenuItem key={locale.code} value={locale.code}>
@@ -149,6 +148,23 @@ export default function Movies() {
               );
             })}
           </Select>
+          <MUISwitch />
+        </Grid>
+        <Grid key="pagination" xs>
+          <TablePagination
+            component="div"
+            count={selectedMovies.length}
+            page={page}
+            rowsPerPage={limit}
+            onPageChange={(_, newPage) => {
+              setPage(newPage);
+            }}
+            onRowsPerPageChange={(e) => {
+              setLimit(Number(e.target.value));
+              setPage(0);
+            }}
+            rowsPerPageOptions={[4, 8, 12, { label: 'All', value: -1 }]}
+          />
         </Grid>
       </Grid>
     </>

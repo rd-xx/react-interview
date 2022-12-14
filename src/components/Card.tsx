@@ -44,7 +44,7 @@ export default function MovieCard(props: MovieType) {
     <Card id={props.id}>
       <CardActionArea>
         <CardContent>
-          <Typography variant="h5" align="left">
+          <Typography variant="h5" align="left" fontWeight={410}>
             {props.title}
           </Typography>
           <Typography
