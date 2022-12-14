@@ -1,13 +1,16 @@
 import getMovies, { formatCategories, MovieType } from '../../utils/movies';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TablePagination from '@mui/material/TablePagination';
 import { setMovies, selectMovies } from './moviesSlice';
+import { getLocale, availableLocales, changeLocale } from '../../App';
 import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Unstable_Grid2';
 import MovieCard from '../../components/Card';
 import Skeleton from '@mui/material/Skeleton';
+import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Trans } from '@lingui/macro';
@@ -22,7 +25,13 @@ export default function Movies() {
     [selectedMovies, setSelectedMovies] = useState<MovieType[]>([]),
     [openDialog, setOpenDialog] = useState(false),
     [page, setPage] = useState(0),
-    [limit, setLimit] = useState(12);
+    [limit, setLimit] = useState(12),
+    [locale, setLocale] = useState(getLocale());
+
+  function handleChangeLocale(event: SelectChangeEvent) {
+    setLocale(event.target.value);
+    changeLocale(event.target.value);
+  }
 
   useEffect(() => {
     async function fetchMovies() {
@@ -106,20 +115,41 @@ export default function Movies() {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        <TablePagination
-          component="div"
-          count={selectedMovies.length}
-          page={page}
-          rowsPerPage={limit}
-          onPageChange={(_, newPage) => {
-            setPage(newPage);
-          }}
-          onRowsPerPageChange={(e) => {
-            setLimit(Number(e.target.value));
-            setPage(0);
-          }}
-          rowsPerPageOptions={[4, 8, 12, { label: 'All', value: -1 }]}
-        />
+        <Grid key="pagination" xs>
+          <TablePagination
+            component="div"
+            count={selectedMovies.length}
+            page={page}
+            rowsPerPage={limit}
+            onPageChange={(_, newPage) => {
+              setPage(newPage);
+            }}
+            onRowsPerPageChange={(e) => {
+              setLimit(Number(e.target.value));
+              setPage(0);
+            }}
+            rowsPerPageOptions={[4, 8, 12, { label: 'All', value: -1 }]}
+          />
+        </Grid>
+        <Grid key="options" xs>
+          <Select value={locale} onChange={handleChangeLocale}>
+            {availableLocales.map((locale) => {
+              return (
+                <MenuItem key={locale.code} value={locale.code}>
+                  <img
+                    loading="lazy"
+                    width="20"
+                    src={`https://flagcdn.com/w20/${locale.code.toLowerCase()}.png`}
+                    srcSet={`https://flagcdn.com/w40/${locale.code.toLowerCase()}.png 2x`}
+                    alt=""
+                    style={{ marginRight: '8px' }}
+                  />
+                  {locale.label}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </Grid>
       </Grid>
     </>
   );

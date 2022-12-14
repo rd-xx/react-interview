@@ -121,7 +121,7 @@ export default function Form(props: FormProps) {
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClick}>
-            Annuler
+            <Trans>Cancel</Trans>
           </Button>
           <LoadingButton
             color="success"

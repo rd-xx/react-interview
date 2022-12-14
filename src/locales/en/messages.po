@@ -21,6 +21,10 @@ msgstr "Add"
 msgid "Add movie"
 msgstr "Add movie"
 
+#: src/features/movies/Form.tsx:124
+msgid "Cancel"
+msgstr "Cancel"
+
 #: src/features/movies/Form.tsx:115
 msgid "Category"
 msgstr "Category"
@@ -41,7 +45,7 @@ msgstr "Enter the fields below to add a movie to your list."
 msgid "Like"
 msgstr "Like"
 
-#: src/features/movies/Movies.tsx:86
+#: src/features/movies/Movies.tsx:95
 msgid "New movie"
 msgstr "New movie"
 
@@ -57,6 +61,6 @@ msgstr "This movie already exists!"
 msgid "Title"
 msgstr "Title"
 
-#: src/features/movies/Movies.tsx:50
+#: src/features/movies/Movies.tsx:59
 msgid "You deleted every movie."
 msgstr "You deleted every movie."
