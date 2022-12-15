@@ -71,7 +71,7 @@ export default function Movies() {
         sx={{ marginBottom: '32px', alignItems: 'center' }}
       >
         {!loaded ? (
-          <Grid>
+          <Grid key="filter" xs>
             <Skeleton animation="wave" variant="rectangular" height={70} />
           </Grid>
         ) : (
